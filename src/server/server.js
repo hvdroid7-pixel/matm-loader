@@ -2,7 +2,9 @@ const path = require('path');
 const express = require('express');
 
 const app = express();
-const PORT = 3000;
+
+// Render asigna el puerto automáticamente
+const PORT = process.env.PORT || 3000;
 
 const rootDir = path.resolve(__dirname, '..', '..');
 const clientDir = path.join(rootDir, 'src', 'client');
@@ -19,5 +21,5 @@ app.get('/', (_req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`[PonyLoader] Server running on http://localhost:${PORT}`);
+  console.log(`[PonyLoader] Server running on port ${PORT}`);
 });
