@@ -1,139 +1,186 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pony Town - Murder at the Meeting</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PonyTown — Launcher personalizado (Murder at the Meeting)</title>
+
     <style>
-      :root {
-        color-scheme: dark;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
       body {
         margin: 0;
         min-height: 100vh;
         display: grid;
         place-items: center;
-        padding: 24px;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-          "Apple Color Emoji", "Segoe UI Emoji";
-        background: radial-gradient(circle at top, #1d2433 0%, #10131b 45%, #090b10 100%);
-        color: #eef2ff;
+        padding: 28px;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: radial-gradient(circle at 10% 10%, #172033 0%, #0b0e15 55%, #040507 100%);
+        color: #e6eef8;
       }
 
       .card {
-        width: min(680px, 100%);
-        background: linear-gradient(160deg, rgba(26, 31, 43, 0.95), rgba(16, 19, 27, 0.95));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        padding: 36px;
-        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+        width: min(820px, 100%);
+        background: linear-gradient(160deg, rgba(20,26,36,0.96), rgba(10,12,16,0.96));
+        border: 1px solid rgba(255,255,255,0.04);
+        border-radius: 18px;
+        padding: 34px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
       }
 
+      header { display:flex; gap:16px; align-items:center; }
       h1 {
-        margin: 0 0 14px;
-        font-size: clamp(1.5rem, 4vw, 2.2rem);
-        line-height: 1.2;
+        margin:0;
+        font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+        line-height:1.1;
       }
 
-      p {
-        margin: 0;
-        color: #cfd6e8;
-        line-height: 1.6;
+      p.lead {
+        margin: 12px 0 0 0;
+        color: #c9d7f0;
+        line-height:1.5;
       }
 
-      .launch-btn {
-        width: 100%;
-        margin-top: 28px;
-        border: 0;
-        border-radius: 14px;
-        padding: 16px 20px;
-        font-size: clamp(1rem, 3vw, 1.15rem);
-        font-weight: 700;
-        color: #0a1020;
-        cursor: pointer;
+      .controls { margin-top: 22px; display:flex; gap:12px; flex-wrap:wrap; }
+
+      .btn {
+        border: 0; border-radius: 12px; padding: 12px 16px;
+        font-weight: 700; cursor: pointer;
         background: linear-gradient(135deg, #7fb5ff, #93d9ff);
-        transition: transform 180ms ease, box-shadow 180ms ease;
-        box-shadow: 0 8px 20px rgba(127, 181, 255, 0.32);
+        color: #061027; box-shadow: 0 10px 26px rgba(127,181,255,0.18);
       }
 
-      .launch-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 24px rgba(127, 181, 255, 0.4);
+      .btn.ghost {
+        background: transparent; color: #b6c6e4;
+        border: 1px solid rgba(255,255,255,0.04);
+        box-shadow: none; font-weight:600;
       }
 
-      .launch-btn:active {
-        transform: translateY(1px);
+      .bookmarklet {
+        display:inline-block;
+        padding:10px 14px;
+        border-radius:10px;
+        background:linear-gradient(135deg,#1b2433,#10131a);
+        border:1px solid rgba(255,255,255,0.03);
+        color:#9fc9ff;
+        text-decoration:none;
+        font-weight:700;
       }
 
-      .status {
-        margin-top: 16px;
-        min-height: 24px;
-        color: #9ee6b0;
-        font-size: 0.95rem;
-      }
+      .help { margin-top:18px; color:#afc6ff; font-size:0.95rem; }
+      ol { margin: 10px 0 0 18px; color:#cfe3ff; }
+      .small { font-size:0.88rem; color:#93a7c6; margin-top:10px; }
 
-      footer {
-        margin-top: 24px;
-        font-size: 0.85rem;
-        color: #93a0bd;
+      footer { margin-top:18px; color:#7f95b4; font-size:0.85rem; }
+
+      .status { margin-top:12px; color:#b7f6c8; min-height:20px; }
+      .columns { display:flex; gap:18px; margin-top:16px; flex-wrap:wrap; }
+      .col { flex:1; min-width:240px; }
+
+      /* small responsive tweak */
+      @media (max-width:520px){
+        .controls { flex-direction:column; }
       }
     </style>
   </head>
+
   <body>
-    <main class="card">
-      <h1>Pony Town - Murder at the Meeting</h1>
-      <p>
-        Launch Pony Town with the custom mod package and initialize the loader script to activate
-        special game mechanics and radar enhancements.
-      </p>
+    <main class="card" role="main" aria-labelledby="title">
+      <header>
+        <div>
+          <h1 id="title">Launcher — Murder at the Meeting</h1>
+          <p class="lead">Lanza el juego y carga automáticamente nuestro paquete de mods (radar + scripts de jugador).</p>
+        </div>
+      </header>
 
-      <button class="launch-btn" id="launchButton">¡Juega Murder at the Meeting en Pony Town!</button>
-      <div class="status" id="statusMessage" aria-live="polite"></div>
+      <div class="controls" aria-hidden="false">
+        <!-- Abrir Pony Town -->
+        <button id="btnOpen" class="btn">Abrir Pony Town</button>
 
-      <footer>Custom client loader for PonyTown mods</footer>
+        <!-- Enlace marcador: arrástralo a tu barra -->
+        <!-- Bookmarklet: el href es un JavaScript ejecutable -->
+        <a id="dragBookmark"
+           class="bookmarklet"
+           title="Arrastra esto a tu barra de marcadores. Luego, al estar en Pony Town pulsa el marcador para inyectar el mod."
+           href="javascript:(function(){var s=document.createElement('script');s.src='https://matm-loader.onrender.com/loader.js';document.head.appendChild(s);})();">
+          ▶ Añadir marcador — Cargar mod
+        </a>
+
+        <!-- Botón para copiar bookmarklet (para usuarios que no puedan arrastrar) -->
+        <button id="btnCopy" class="btn ghost">Copiar marcador (URL)</button>
+      </div>
+
+      <div class="status" id="status" aria-live="polite"></div>
+
+      <section class="help" aria-label="Instrucciones">
+        <h2 style="font-size:1rem;margin:12px 0 6px 0">Cómo usar (rápido)</h2>
+
+        <div class="columns">
+          <div class="col">
+            <strong>Paso 1 — Abrir el juego</strong>
+            <ol>
+              <li>Pulsa <strong>"Abrir Pony Town"</strong>. Se abrirá el juego en una nueva pestaña.</li>
+              <li>Vuelve a esta página (o mantenla abierta en otra pestaña).</li>
+            </ol>
+          </div>
+
+          <div class="col">
+            <strong>Paso 2 — Cargar el mod</strong>
+            <ol>
+              <li>Si puedes <em>arrastrar</em> el botón <em>"Añadir marcador — Cargar mod"</em> a la barra de marcadores del navegador, hazlo. Luego, en la pestaña del juego, pulsa ese marcador.</li>
+              <li>Si no puedes arrastrar: pulsa <strong>"Copiar marcador (URL)"</strong>, crea un nuevo marcador en tu navegador y pega la URL copiada en el campo URL del marcador. Guarda y haz clic en el marcador estando en Pony Town.</li>
+            </ol>
+          </div>
+        </div>
+
+        <p class="small">
+          Explicación técnica breve: el marcador (bookmarklet) ejecuta un pequeño código que carga automáticamente <code>loader.js</code> desde nuestro servidor. El loader
+          se encarga de descargar e iniciar <code>playerscript.js</code> y <code>radar.js</code> dentro del juego.
+        </p>
+
+        <h3 style="margin-top:10px;font-size:0.98rem">Solución de problemas</h3>
+        <ul style="color:#cfe3ff;">
+          <li>Si al pulsar el marcador no pasa nada, asegúrate de que estás en la pestaña del juego (no en una página de configuración o en el menú del navegador).</li>
+          <li>Verifica que tu bloqueador de anuncios o extensiones de privacidad no bloqueen la ejecución de bookmarklets ni la carga de scripts externos.</li>
+        </ul>
+      </section>
+
+      <footer>
+        Custom client loader • MATM — Si quieres, puedo generar instrucciones específicas para Chrome/Firefox/Edge paso a paso.
+      </footer>
     </main>
 
     <script>
-const launchButton = document.getElementById('launchButton');
-const statusMessage = document.getElementById('statusMessage');
+      // Bookmarklet JavaScript (texto que copiaremos al portapapeles)
+      const bookmarkletCode = "javascript:(function(){var s=document.createElement('script');s.src='https://matm-loader.onrender.com/loader.js';document.head.appendChild(s);})();";
 
-let gameWindow = null;
+      const btnCopy = document.getElementById('btnCopy');
+      const btnOpen = document.getElementById('btnOpen');
+      const status = document.getElementById('status');
 
-launchButton.onclick = () => {
+      // Abrir pony.town en nueva pestaña
+      btnOpen.addEventListener('click', () => {
+        window.open('https://pony.town', '_blank', 'noopener,noreferrer');
+        status.textContent = "Se abrió Pony Town en otra pestaña. Ahora arrastra el marcador a tu barra o pulsa 'Copiar marcador (URL)'.";
+      });
 
-  gameWindow = window.open("https://pony.town", "_blank");
+      // Copiar bookmarklet al portapapeles (para pegar como URL en un marcador)
+      btnCopy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(bookmarkletCode);
+          status.textContent = "Marcador copiado al portapapeles. Crea un marcador nuevo y pega la URL en su campo 'Dirección/URL'.";
+        } catch (err) {
+          // Fallback: mostrar el código para que lo copie manualmente
+          status.innerHTML = "No se pudo copiar automáticamente. Copia manualmente el siguiente código:<br><pre style='color:#dceeff; background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; overflow:auto; margin-top:8px;'>"
+            + bookmarkletCode.replace(/</g, '&lt;') + "</pre>";
+        }
+      });
 
-  statusMessage.innerHTML =
-  `Game opened.<br><br>
-  When Pony Town loads, click the button below to activate the mod.`;
-
-  const injectBtn = document.createElement("button");
-  injectBtn.textContent = "Activate Mod";
-  injectBtn.className = "launch-btn";
-
-  injectBtn.onclick = () => {
-
-    if(!gameWindow){
-      statusMessage.textContent = "Game window not detected.";
-      return;
-    }
-
-    gameWindow.eval(`
-      fetch("https://matm-loader.onrender.com/loader.js")
-      .then(r=>r.text())
-      .then(eval);
-    `);
-
-  };
-
-  document.querySelector(".card").appendChild(injectBtn);
-
-};
-</script>
+      // UX: al arrastrar el enlace, el usuario sabe que es un bookmarklet
+      const dragLink = document.getElementById('dragBookmark');
+      dragLink.addEventListener('dragstart', () => {
+        status.textContent = "Arrastra el marcador hasta la barra de marcadores del navegador.";
+      });
+    </script>
   </body>
 </html>
