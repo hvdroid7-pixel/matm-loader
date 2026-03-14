@@ -1,0 +1,12 @@
+{
+  "name": "matm-loader",
+  "version": "1.0.0",
+  "description": "PonyTown Murder at the Meeting mod loader",
+  "main": "src/server/server.js",
+  "scripts": {
+    "start": "node src/server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
