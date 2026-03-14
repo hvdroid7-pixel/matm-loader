@@ -99,14 +99,45 @@
     </main>
 
     <script>
-      const launchButton = document.getElementById('launchButton');
-      const statusMessage = document.getElementById('statusMessage');
+const launchButton = document.getElementById('launchButton');
+const statusMessage = document.getElementById('statusMessage');
 
-      launchButton.addEventListener('click', () => {
-        window.open('https://pony.town', '_blank', 'noopener,noreferrer');
-        statusMessage.textContent =
-          'Pony Town opened in a new tab. Run loader.js in the Pony Town page to load the mod scripts.';
-      });
-    </script>
+let injectButton = null;
+
+launchButton.addEventListener('click', () => {
+
+  // abrir pony town
+  window.open('https://pony.town', '_blank');
+
+  statusMessage.textContent =
+    'Pony Town opened. Now click "Inject Mod" while you are on the Pony Town tab.';
+
+  // crear boton inject
+  injectButton = document.createElement("button");
+  injectButton.textContent = "Inject Mod Into Pony Town";
+  injectButton.className = "launch-btn";
+  injectButton.style.marginTop = "14px";
+
+  injectButton.onclick = () => {
+
+    const code = `
+      const s=document.createElement("script");
+      s.src="https://matm-loader.onrender.com/loader.js";
+      document.head.appendChild(s);
+    `;
+
+    navigator.clipboard.writeText(
+      `javascript:(function(){${code}})();`
+    );
+
+    statusMessage.textContent =
+      "Bookmarklet copied! Paste it in the Pony Town tab URL bar and press Enter.";
+
+  };
+
+  launchButton.insertAdjacentElement("afterend", injectButton);
+
+});
+</script>
   </body>
 </html>
