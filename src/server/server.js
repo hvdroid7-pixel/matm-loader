@@ -3,19 +3,22 @@ const express = require('express');
 
 const app = express();
 
-// Render asigna el puerto automáticamente
+// Puerto para Render o local
 const PORT = process.env.PORT || 3000;
 
-const rootDir = path.resolve(__dirname, '..', '..');
+// raíz del proyecto
+const rootDir = process.cwd();
+
+// carpeta donde están los scripts del mod
 const clientDir = path.join(rootDir, 'src', 'client');
 
-// Serve client mod scripts directly from /src/client/*
+// Servir scripts del mod
 app.use('/src/client', express.static(clientDir));
 
-// Serve project root static assets like index.html and loader.js
+// Servir archivos del sitio (index.html, loader.js)
 app.use(express.static(rootDir));
 
-// Default route for the loader website
+// Ruta principal
 app.get('/', (_req, res) => {
   res.sendFile(path.join(rootDir, 'index.html'));
 });
