@@ -1,39 +1,33 @@
 (() => {
   console.log('[PonyLoader] Loader started');
 
-  // Keep this list ordered: scripts load sequentially in the same order.
+  // Scripts del mod
   const modScripts = [
-    '/src/client/playerscript.js',
-    '/src/client/radar.js'
+    'https://matm-loader.onrender.com/src/client/playerscript.js',
+    'https://matm-loader.onrender.com/src/client/radar.js'
   ];
 
-  const loadScript = (src) =>
-    new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = false;
+  const loadScript = async (url) => {
+    try {
+      console.log(`[PonyLoader] Fetching: ${url}`);
 
-      script.onload = () => {
-        console.log(`[PonyLoader] Loaded: ${src}`);
-        resolve(src);
-      };
+      const response = await fetch(url);
+      const code = await response.text();
 
-      script.onerror = () => {
-        reject(new Error(`[PonyLoader] Failed to load: ${src}`));
-      };
+      // Ejecuta el código del script
+      eval(code);
 
-      document.head.appendChild(script);
-    });
+      console.log(`[PonyLoader] Executed: ${url}`);
+    } catch (err) {
+      console.error(`[PonyLoader] Failed: ${url}`, err);
+    }
+  };
 
   const loadAllScripts = async () => {
-    try {
-      for (const scriptPath of modScripts) {
-        await loadScript(scriptPath);
-      }
-      console.log('[PonyLoader] All scripts finished loading');
-    } catch (error) {
-      console.error(error.message);
+    for (const script of modScripts) {
+      await loadScript(script);
     }
+    console.log('[PonyLoader] All scripts finished loading');
   };
 
   loadAllScripts();
