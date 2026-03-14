@@ -102,42 +102,38 @@
 const launchButton = document.getElementById('launchButton');
 const statusMessage = document.getElementById('statusMessage');
 
-let injectButton = null;
+let gameWindow = null;
 
-launchButton.addEventListener('click', () => {
+launchButton.onclick = () => {
 
-  // abrir pony town
-  window.open('https://pony.town', '_blank');
+  gameWindow = window.open("https://pony.town", "_blank");
 
-  statusMessage.textContent =
-    'Pony Town opened. Now click "Inject Mod" while you are on the Pony Town tab.';
+  statusMessage.innerHTML =
+  `Game opened.<br><br>
+  When Pony Town loads, click the button below to activate the mod.`;
 
-  // crear boton inject
-  injectButton = document.createElement("button");
-  injectButton.textContent = "Inject Mod Into Pony Town";
-  injectButton.className = "launch-btn";
-  injectButton.style.marginTop = "14px";
+  const injectBtn = document.createElement("button");
+  injectBtn.textContent = "Activate Mod";
+  injectBtn.className = "launch-btn";
 
-  injectButton.onclick = () => {
+  injectBtn.onclick = () => {
 
-    const code = `
-      const s=document.createElement("script");
-      s.src="https://matm-loader.onrender.com/loader.js";
-      document.head.appendChild(s);
-    `;
+    if(!gameWindow){
+      statusMessage.textContent = "Game window not detected.";
+      return;
+    }
 
-    navigator.clipboard.writeText(
-      `javascript:(function(){${code}})();`
-    );
-
-    statusMessage.textContent =
-      "Bookmarklet copied! Paste it in the Pony Town tab URL bar and press Enter.";
+    gameWindow.eval(`
+      fetch("https://matm-loader.onrender.com/loader.js")
+      .then(r=>r.text())
+      .then(eval);
+    `);
 
   };
 
-  launchButton.insertAdjacentElement("afterend", injectButton);
+  document.querySelector(".card").appendChild(injectBtn);
 
-});
+};
 </script>
   </body>
 </html>
